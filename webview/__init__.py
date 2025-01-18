@@ -108,6 +108,7 @@ def start(
     private_mode: bool = True,
     storage_path: str | None = None,
     menu: list[Menu] = [],
+    hide_view_menu: bool = False,
     server: type[http.ServerType] = http.BottleServer,
     server_args: dict[Any, Any] = {},
     ssl: bool = False,
@@ -134,6 +135,7 @@ def start(
            Default is True.
     :param storage_path: Custom location for cookies and other website data
     :param menu: List of menus to be included in the app menu
+    :param hide_view_menu: Hide the view menu. Supported only on Cocoa.
     :param server: Server class. Defaults to BottleServer
     :param server_args: Dictionary of arguments to pass through to the server instantiation
     :param ssl: Enable SSL for local HTTP server. Default is False.
@@ -216,7 +218,7 @@ def start(
         thread.start()
 
     if menu:
-        guilib.set_app_menu(menu)
+        guilib.set_app_menu(menu, hide_view_menu)
     guilib.create_window(windows[0])
     # keyfile is deleted by the ServerAdapter right after wrap_socket()
     if certfile:
